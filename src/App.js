@@ -33,7 +33,7 @@ const _answer = [
 
 const _currentNivel = 1;
 
-const answerFinal= ['S', "I", "T", "I", "O"];
+const answerFinal= ['P', "I", "L", "A", "R"];
 
 
 
@@ -42,31 +42,23 @@ function App() {
   const [currentNivel, setCurrentNivel] = useState(_currentNivel);
 
 
-  // const teste = () => {
-  //   answerFinal.map((itemFinal, indexFinal) => {
-  //     let obj = {};
-  //     if(itemValue == itemFinal && indexValue === indexFinal){
-  //       obj = {
-  //         letter: itemValue,
-  //         positionCorrect: true,
-  //         isExist: true,
-  //       }
-  //     }else if(itemValue === itemFinal && indexValue !== indexFinal){
-  //       obj = {
-  //         letter: itemValue,
-  //         positionCorrect: false,
-  //         isExist: true,
-  //       }
-  //     }else {
-  //       obj = {
-  //         letter: itemValue,
-  //         positionCorrect: false,
-  //         isExist: false,
-  //       }
-  //     }
-  //     ArrayTeste.push(obj);
-  //   })
-  // }
+  const getLetterIndex = (letter) => {
+    let array = [];
+    answerFinal.map((item, index) => {
+      if(letter === item){
+        array.push(
+          {
+            letter: letter,
+            index: index
+          }
+        )
+      }      
+    });
+
+
+    return array;
+
+  }
 
 
   async function onSubmit(value) {
@@ -85,30 +77,42 @@ function App() {
 
       console.log(indexValue);
 
-      const result = answerFinal.indexOf(itemValue);
+      // const result = answerFinal.indexOf(itemValue);
 
-      console.log(result);
+      const result = getLetterIndex(itemValue);
 
-      if(result === indexValue){
-        teste[indexValue] = "";
-        ArrayTeste.push({
-          letter: itemValue,
-          positionCorrect: true,
-          isExist: true,
-        })
-      }else if(result !== indexValue && result !== -1){
-        ArrayTeste.push({
-          letter: itemValue,
-          positionCorrect: false,
-          isExist: true,
-        })
-      }else if(result === -1){
-        ArrayTeste.push({
+      let obj = {
+               letter: itemValue,
+              positionCorrect: false,
+              isExist: false,
+      }
+
+      if(result.length > 0){
+        result.map((item) => {
+          if(item.letter === itemValue && item.index === indexValue){
+            obj = {
+              letter: itemValue,
+              positionCorrect: true,
+              isExist: true,
+            }
+          }else if(obj.positionCorrect !== true){
+            obj = {
+              letter: itemValue,
+              positionCorrect: false,
+              isExist: true,
+            }
+          }
+        });
+      }else {
+        obj = {
           letter: itemValue,
           positionCorrect: false,
           isExist: false,
-        })
+        }
       }
+
+      ArrayTeste.push(obj)
+
     });
     
 
@@ -125,8 +129,8 @@ function App() {
     <InputOrSkeleton currentNivel={currentNivel} index={3} answer={answer[2]} onSubmit={(e) => onSubmit(e)} />
     <InputOrSkeleton currentNivel={currentNivel} index={4} answer={answer[3]} onSubmit={(e) => onSubmit(e)} />
     <InputOrSkeleton currentNivel={currentNivel} index={5} answer={answer[4]} onSubmit={(e) => onSubmit(e)} />
-    <InputOrSkeleton currentNivel={currentNivel} index={5} answer={answer[5]} onSubmit={(e) => onSubmit(e)} />
-
+    <InputOrSkeleton currentNivel={currentNivel} index={6} answer={answer[5]} onSubmit={(e) => onSubmit(e)} />
+  
     </ContainerInputs>
   </FlexFullCenter>
   );
