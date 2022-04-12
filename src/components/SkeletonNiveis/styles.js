@@ -5,8 +5,8 @@ export const InputSkeleton = styled.div`
     border-radius: 6px;
     border: none !important;
     box-shadow: rgb(0 0 0 / 10%) 0px 0px 10px 0px;
-    margin: 10px !important;
-    padding-left: 10px !important;
+    margin: 5px !important;
+    padding-left: 5px !important;
     width: 36px;
     height: 42px;
     font-size: 32px;
