@@ -18,8 +18,8 @@ export const InputSkeleton = styled.div`
 
     background-color: #465364 ;
     text-align: center !important;
-    height: 60px !important;
-    width: 60px !important;
+    height: 80px !important;
+    width: 80px !important;
 
 
   display: flex;

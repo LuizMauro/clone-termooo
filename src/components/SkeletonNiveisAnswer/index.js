@@ -1,49 +1,16 @@
 import React from 'react';
-
 import { InputSkeleton } from './styles';
-
-
-
-// const answer = [
-//   {
-//     letter: 'D',
-//     positionCorrect: false,
-//     isExist: false,
-//   },
-//   {
-//     letter: 'E',
-//     positionCorrect: true,
-//     isExist: true,
-//   },
-//   {
-//     letter: 'S',
-//     positionCorrect: true,
-//     isExist: true,
-//   },
-//   {
-//     letter: 'E',
-//     positionCorrect: false,
-//     isExist: true,
-//   },
-//   {
-//     letter: 'T',
-//     positionCorrect: false,
-//     isExist: true,
-//   }
-// ];
-
-
 
 function SkeletonNiveisAnswer({ answer }) {
   function renderSkeleton(item, index) {
     if(item.positionCorrect){
-    return (<InputSkeleton key={index} style={{background:  'green' }}>
+    return (<InputSkeleton key={index} style={{background:  '#22b168' }}>
         {item.letter}
       </InputSkeleton>)
     }
 
     if(item.isExist){
-      return (<InputSkeleton key={index} style={{background:  'orange' }}>
+      return (<InputSkeleton key={index} style={{background:  '#f7a62e' }}>
         {item.letter}
       </InputSkeleton>)
     }
