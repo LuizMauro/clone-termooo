@@ -8,18 +8,20 @@ const answerFinal = ["P", "I", "L", "A", "R"];
 
 function App() {
   const [answer, setAnswer] = useState([]);
+  const [finish, setFinish] = useState(false);
+  const [countTries, setCountTries] = useState(1);
   const [currentNivel, setCurrentNivel] = useState(_currentNivel);
 
   const getLetterIndex = (letter) => {
     let array = [];
     answerFinal.forEach((item, index) => {
-        if (letter === item) {
-          array.push({
-            letter: letter,
-            index: index,
-          });
-        }
-      });
+      if (letter === item) {
+        array.push({
+          letter: letter,
+          index: index,
+        });
+      }
+    });
     return { acertos: 0, exist: 0, array };
   };
 
@@ -94,8 +96,20 @@ function App() {
       }
     });
 
+    let count = 0;
+    tries.forEach((item) => {
+      if (item.positionCorrect === true) {
+        count++;
+      }
+    });
+
     setAnswer([...answer, tries]);
-    console.log(tries);
+
+    if (count === 5) {
+      setFinish(true);
+      setCountTries(currentNivel);
+      alert(currentNivel);
+    }
   }
 
   return (
@@ -106,36 +120,48 @@ function App() {
           index={1}
           answer={answer[0]}
           onSubmit={(e) => onSubmit(e)}
+          finish={finish}
+          countTries={countTries}
         />
         <InputOrSkeleton
           currentNivel={currentNivel}
           index={2}
           answer={answer[1]}
           onSubmit={(e) => onSubmit(e)}
+          finish={finish}
+          countTries={countTries}
         />
         <InputOrSkeleton
           currentNivel={currentNivel}
           index={3}
           answer={answer[2]}
           onSubmit={(e) => onSubmit(e)}
+          finish={finish}
+          countTries={countTries}
         />
         <InputOrSkeleton
           currentNivel={currentNivel}
           index={4}
           answer={answer[3]}
           onSubmit={(e) => onSubmit(e)}
+          finish={finish}
+          countTries={countTries}
         />
         <InputOrSkeleton
           currentNivel={currentNivel}
           index={5}
           answer={answer[4]}
           onSubmit={(e) => onSubmit(e)}
+          finish={finish}
+          countTries={countTries}
         />
         <InputOrSkeleton
           currentNivel={currentNivel}
           index={6}
           answer={answer[5]}
           onSubmit={(e) => onSubmit(e)}
+          finish={finish}
+          countTries={countTries}
         />
       </ContainerInputs>
     </FlexFullCenter>

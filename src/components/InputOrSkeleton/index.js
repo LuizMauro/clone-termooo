@@ -3,7 +3,7 @@ import Input from '../../lib/Input'
 import { SkeletonNiveis } from '../SkeletonNiveis';
 import { SkeletonNiveisAnswer } from '../SkeletonNiveisAnswer';
 
-function InputOrSkeleton({currentNivel, index, answer, onSubmit}) {
+function InputOrSkeleton({currentNivel, index, answer, onSubmit, finish, countTries}) {
   const [value, setValue] = useState('');
 
   const checkIsSubmit = (e) => {
@@ -24,17 +24,21 @@ function InputOrSkeleton({currentNivel, index, answer, onSubmit}) {
 
 
   function renderInputOrSekeleton(index){
-    if(currentNivel === index){
+
+    if(currentNivel === index && !finish){
+      console.log("entrou")
       return <Input fields={5} onKeyDown={(e) => checkIsSubmit(e)} onChange={(e) => setValue(e)} value={value} forceUppercase  />
     }
 
-    if(currentNivel < index ){
+    if(currentNivel > index || (finish && countTries > index) ){
+      return <SkeletonNiveisAnswer answer={answer}  />;
+    }
+
+    if(currentNivel < index || (finish && countTries !== index)){
       return <SkeletonNiveis />;
     }
 
-    if(currentNivel > index ){
-      return <SkeletonNiveisAnswer answer={answer} />;
-    }
+    
 }
 
   return <>
