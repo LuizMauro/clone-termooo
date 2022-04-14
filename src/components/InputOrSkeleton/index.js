@@ -7,7 +7,6 @@ function InputOrSkeleton({currentNivel, index, answer, onSubmit, finish, countTr
   const [value, setValue] = useState('');
 
   const checkIsSubmit = (e) => {
-    console.log(e.keyCode);
     if(value.length === 5 && e.keyCode === 13){
 
       const arrayAnswer = [
@@ -26,7 +25,6 @@ function InputOrSkeleton({currentNivel, index, answer, onSubmit, finish, countTr
   function renderInputOrSekeleton(index){
 
     if(currentNivel === index && !finish){
-      console.log("entrou")
       return <Input fields={5} onKeyDown={(e) => checkIsSubmit(e)} onChange={(e) => setValue(e)} value={value} forceUppercase  />
     }
 

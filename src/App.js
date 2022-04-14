@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { FlexFullCenter, ContainerInputs } from "./styles";
 import { InputOrSkeleton } from "./components/InputOrSkeleton";
-import { answerTest } from './utils/answerTest'
+import { answerTest } from "./utils/answerTest";
+import { getPalavra } from './utils/getPalavra'
 
 const _currentNivel = 1;
+const answerFinal = getPalavra();
 
-const answerFinal = ["P", "I", "L", "A", "R"];
+console.log(answerFinal);
 
 function App() {
   const [answer, setAnswer] = useState([]);
@@ -13,9 +15,17 @@ function App() {
   const [countTries, setCountTries] = useState(1);
   const [currentNivel, setCurrentNivel] = useState(_currentNivel);
 
-
   async function onSubmit(value) {
-    answerTest(value, answerFinal, currentNivel, setCurrentNivel, setAnswer, answer, setFinish, setCountTries);
+    answerTest(
+      value,
+      answerFinal,
+      currentNivel,
+      setCurrentNivel,
+      setAnswer,
+      answer,
+      setFinish,
+      setCountTries
+    );
   }
 
   return (
