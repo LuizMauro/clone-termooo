@@ -1,47 +1,55 @@
-import React, { useState } from 'react';
-import Input from '../../lib/Input'
-import { SkeletonNiveis } from '../SkeletonNiveis';
-import { SkeletonNiveisAnswer } from '../SkeletonNiveisAnswer';
+import React, { useState } from "react";
+import Input from "../../lib/Input";
+import { SkeletonNiveis } from "../SkeletonNiveis";
+import { SkeletonNiveisAnswer } from "../SkeletonNiveisAnswer";
 
-function InputOrSkeleton({currentNivel, index, answer, onSubmit, finish, countTries}) {
-  const [value, setValue] = useState('');
+function InputOrSkeleton({
+  currentNivel,
+  index,
+  answer,
+  onSubmit,
+  finish,
+  countTries,
+}) {
+  const [value, setValue] = useState("");
 
   const checkIsSubmit = (e) => {
-    if(value.length === 5 && e.keyCode === 13){
-
+    if (value.length === 5 && e.keyCode === 13) {
       const arrayAnswer = [
         value.charAt(0),
         value.charAt(1),
         value.charAt(2),
         value.charAt(3),
         value.charAt(4),
-      ]
+      ];
 
-      onSubmit({currentNivel, index, value, arrayAnswer});
+      onSubmit({ currentNivel, index, value, arrayAnswer });
+    }
+  };
+
+  function renderInputOrSekeleton(index) {
+    if (currentNivel === index && !finish) {
+      return (
+        <Input
+          fields={5}
+          onKeyDown={(e) => checkIsSubmit(e)}
+          onChange={(e) => setValue(e)}
+          value={value}
+          forceUppercase
+        />
+      );
+    }
+
+    if (currentNivel > index || (finish && countTries > index)) {
+      return <SkeletonNiveisAnswer answer={answer} />;
+    }
+
+    if (currentNivel < index || (finish && countTries !== index)) {
+      return <SkeletonNiveis />;
     }
   }
 
-
-  function renderInputOrSekeleton(index){
-
-    if(currentNivel === index && !finish){
-      return <Input fields={5} onKeyDown={(e) => checkIsSubmit(e)} onChange={(e) => setValue(e)} value={value} forceUppercase  />
-    }
-
-    if(currentNivel > index || (finish && countTries > index) ){
-      return <SkeletonNiveisAnswer answer={answer}  />;
-    }
-
-    if(currentNivel < index || (finish && countTries !== index)){
-      return <SkeletonNiveis />;
-    }
-
-    
+  return <>{renderInputOrSekeleton(index)}</>;
 }
 
-  return <>
-    {renderInputOrSekeleton(index)}
-  </>;
-}
-
-export  {InputOrSkeleton};
+export { InputOrSkeleton };

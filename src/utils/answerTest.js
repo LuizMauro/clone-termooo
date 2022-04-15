@@ -19,9 +19,18 @@ export const answerTest = (
   setAnswer,
   answer,
   setFinish,
-  setCountTries
+  setCountTries,
+  palavrasCertas,
+  palavrasNaoExistentes,
+  palavrasExistem,
+  setPalavrasCertas,
+  setPalavrasNaoExistentes,
+  setPalavrasExistem
 ) => {
   setCurrentNivel(currentNivel + 1);
+  let palavrasExistem2 = palavrasExistem;
+  let palavrasNaoExistentes2 = palavrasNaoExistentes;
+  let palavrasCertas2 = palavrasCertas;
 
   let tries = [];
   let arrayLetterControl = [];
@@ -55,6 +64,7 @@ export const answerTest = (
         result.array.forEach((item) => {
           if (item.letter === itemValue && item.index === indexValue) {
             result.acertos = result.acertos + 1;
+            palavrasCertas2.push(itemValue);
             obj = {
               letter: itemValue,
               positionCorrect: true,
@@ -66,6 +76,7 @@ export const answerTest = (
             result.exist < resultTamanho
           ) {
             result.exist = result.exist + 1;
+            palavrasExistem2.push(itemValue);
             obj = {
               letter: itemValue,
               positionCorrect: false,
@@ -74,6 +85,7 @@ export const answerTest = (
           }
         });
       } else {
+        palavrasNaoExistentes2.push(itemValue);
         obj = {
           letter: itemValue,
           positionCorrect: false,
@@ -82,6 +94,7 @@ export const answerTest = (
       }
       tries.push(obj);
     } else {
+      palavrasNaoExistentes2.push(itemValue);
       const obj = {
         letter: itemValue,
         positionCorrect: false,
@@ -98,10 +111,43 @@ export const answerTest = (
     }
   });
 
+  setPalavrasCertas(palavrasCertas2);
+  setPalavrasNaoExistentes(palavrasNaoExistentes2);
+  setPalavrasExistem(palavrasExistem2);
   setAnswer([...answer, tries]);
 
   if (count === 5) {
     setFinish(true);
     setCountTries(currentNivel);
+
+    let vitorias = localStorage.getItem("vitorias")
+      ? localStorage.getItem("vitorias")
+      : 0;
+    vitorias++;
+    localStorage.setItem("vitorias", vitorias);
+
+    let totalJogos = localStorage.getItem("totalJogos")
+      ? localStorage.getItem("totalJogos")
+      : 0;
+    totalJogos++;
+    localStorage.setItem("totalJogos", totalJogos);
+
+    alert("Parabéns, você acertou todas as letras!");
+
+    return;
+  }
+
+  if (currentNivel === 6) {
+    let totalJogos = localStorage.getItem("totalJogos")
+      ? localStorage.getItem("totalJogos")
+      : 0;
+    totalJogos++;
+    localStorage.setItem("totalJogos", totalJogos);
+    setFinish(true);
+    setCountTries(currentNivel);
+
+    alert("Você perdeu!");
+
+    return;
   }
 };
